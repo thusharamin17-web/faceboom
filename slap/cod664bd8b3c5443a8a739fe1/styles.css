@@ -1,0 +1,154 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Luckiest Guy', Arial, sans-serif;
+    /* Playful sky background */
+    background: radial-gradient(circle at 60% 60%, #bffaff 0%, #48d6ff 60%, #2e79c9 100%);
+    min-height: 100vh;
+    color: #171717;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Game Title */
+h1 {
+    font-style:  sans-serif;
+    font-weight: bolder;
+    font-size: 3rem;
+    margin: 30px 0 10px 0;
+    letter-spacing: 2px;
+    color: #ff5a36;
+    text-shadow: 2px 2px 8px #fff4cc, 1px 1px 0 #2e79c9;
+}
+
+/* Controls and Score styling */
+#startButton {
+    background: linear-gradient(90deg, #ff822d 0%, #ffd426 100%);
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 12px 30px;
+    border-radius: 22px;
+    margin: 8px 0 14px 0;
+    cursor: pointer;
+    box-shadow: 0 3px 8px #ffb27466;
+    letter-spacing: 1px;
+    transition: background 0.2s;
+}
+
+#startButton:disabled {
+    background: #e0e0e0;
+    color: #bbb;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+#startButton:hover:enabled {
+    background: linear-gradient(90deg, #ffd426 0%, #ff822d 100%);
+}
+
+#score {
+    font-size: 1.8rem;
+    color: #133955;
+    margin: 10px 0 0 0;
+    font-weight: bold;
+    text-shadow: 1px 1px 0 #fff;
+}
+
+#timer {
+    font-size: 1.3rem;
+    color: #2e79c9;
+    margin-top: 8px;
+    padding-bottom: 12px;
+    font-weight: bold;
+    text-shadow: 1px 1px 0 #fff;
+}
+
+/* Game board in 3x3 rounded grid */
+.game-board {
+    display: grid;
+    grid-template-columns: repeat(3, 140px);
+    grid-template-rows: repeat(3, 140px);
+    gap: 22px;
+    background: gain;
+    padding: 30px;
+    border-radius: 40px;
+    box-shadow: 0 10px 32px 0 #2e79c966;
+    margin-bottom: 30px;
+}
+
+/* Hole appearance: soft, playful and 3D */
+.hole {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 60% 40%, #32b1ff 80%, #48d6ff 100%);
+    box-shadow: 0px 11px 18px #2e79c988, inset 0 1px 10px #fff4cc66;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.25s;
+}
+
+.hole.active, .hole.bad-active {
+    box-shadow: 0px 0px 25px #ff822dcc, 0px 5px 25px #2e79c966;
+}
+
+/* Images inside holes (face & bomb) */
+.hole img {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 3px 16px #17171744;
+    position: absolute;
+    left: 15px;
+    top: 15px;
+    /* invisible by default, only show when .active or .bomb-active is set by JS */
+    display: none;
+    transform: scale(0);
+    transition: transform 0.2s, border 0.2s;
+}
+
+/* Show face on .active holes */
+.hole.active img.face,
+.hole.bad-active img.badface {
+    display: block;
+    animation: popIn 0.2s cubic-bezier(.61,-0.35, .38, 1.91) forwards;
+}
+
+/* Show bomb on .bomb-active holes */
+
+/* Red border on clicked images */
+.hole img.clicked {
+    border: 5px solid #e80d0d;
+    transition: border 0.2s;
+}
+
+/* Fun pop-in effect */
+@keyframes popIn {
+    0% { transform: scale(0); }
+    75% { transform: scale(1.23); }
+    100% { transform: scale(1); }
+}
+@media (max-width: 600px) {
+    h1 { font-size: 1.4rem; }
+    .game-board {
+        grid-template-columns: repeat(3, 70px);
+        grid-template-rows: repeat(3, 70px);
+        gap: 8px;
+        padding: 8px;
+        border-radius: 12px;
+    }
+    .hole {
+        width: 70px; height: 70px;
+        border-radius: 50%;
+    }
+    .hole img { width: 54px; height: 54px; left: 8px; top: 8px; }
+    #startButton { font-size: 1rem; padding: 7px 10px; border-radius: 12px; }
+    #score, #timer { font-size: 1rem; }
+}
